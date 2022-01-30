@@ -1,0 +1,75 @@
+{% extends 'photos/base.html' %}
+
+
+{% block content %}
+
+{% include 'photos/jumbotron.html' %}
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing mt-5">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row row-cols-1 xs-2 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-3">
+{% for profile in profiles %}
+
+      <div class="col-lg-4 " >
+        
+        <p class='text-center'>
+        <img class="bd-placeholder-img rounded-circle bg-dark"  width="140" height="140" src='{{profile.image.url}}' alt={{profile.user.username}} preserveAspectRatio="xMidYMid slice" focusable="false">
+</p>
+<a href="{% url 'profile_detail' profile.slug profile.profile_id %}" style='text-decoration:none'>
+        <h2 style='text-align:center'>@{{profile.user.username|capfirst}}</h2>
+    </a>
+        <p style='text-align:center'>{{profile.about|truncatechars:'30'}} </p>
+
+
+    <div style='text-align:center'>
+    <form action="{% url 'follow' profile.slug profile.profile_id %}" method='POST'>
+        {% csrf_token %}
+            <button  class='btn btn-sm btn-primary rounded' type='submit' >
+            {% if user in profile.followers.all%}
+            Unfollow
+            {% else %}
+              Follow 
+              {% endif %}
+            {{profile.followers.count}}
+          </button>
+    </form>
+    </div>
+
+
+
+
+        
+        </div>
+{% endfor %}
+        </div>
+      </div>
+
+<div style='text-align:center'>
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-success mb-4" style='color:white; background-color:#262730' href="?page=1">First</a>
+        <a class="btn btn-outline-success mb-4" style='color:white; background-color:#262730' href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-success mb-4" style='color:white; background-color:#262730' href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-success mb-4" style='color:white; background-color:#262730' href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-success mb-4" style='color:white; background-color:#262730' href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-success mb-4" style='color:white; background-color:#262730' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+
+{% endblock %}

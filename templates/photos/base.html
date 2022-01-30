@@ -1,0 +1,122 @@
+
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.87.0">
+        {% if title %}
+        <title>StudioHub - {{ title }}</title>
+        {% else %}
+        <title>StudioHub</title>
+        {% endif %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> 
+
+
+
+    
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+  </head>
+  <body style='background-color:#f5f5f5'>
+    
+<header>
+  <div class="collapse"  style='background-color:#446df6' id="navbarHeader">
+    
+
+        <div class="col-12 py-4 text-center">
+          <ul class="list-unstyled" >
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}" class="text-white" style='text-decoration:none'>Logout</a></li>
+            <li><a href="{% url 'password_change' %}" class="text-white" style='text-decoration:none'>Change Password</a></li>
+
+            <li><a href="{% url 'profile_detail' user.profile.slug user.profile.profile_id %}" class="text-white" style='text-decoration:none'>My Profile</a></li>
+
+            <li><a href="{% url 'update_user' user.id %}" class="text-white" style='text-decoration:none'>Update User Information</a></li>
+
+            <li><a href="{% url 'create_photo' %}" class="text-white" style='text-decoration:none'>Add Photo</a></li>
+
+          {% else %}
+            <li><a href="{% url 'login' %}" class="text-white" style='text-decoration:none'>Login</a></li>
+            <li><a href="{% url 'register' %}" class="text-white" style='text-decoration:none'>Register</a></li>
+
+          {% endif %}
+
+
+
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark  shadow-sm" style='background-color:#357ded'>
+    <div class="container">
+
+      <a href="{% url 'list_photo' %}" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>StudioHub </strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+
+
+
+        <div class="row">
+        <div class="col-md-8 m-auto mt-4">
+            {% if messages %} {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message|capfirst }}
+            </div>
+            {% endfor %} {% endif %} 
+        </div>
+        <div>{% block content %}{% endblock %}</div>
+
+    </div>
+
+</main>
+
+<footer class="text-muted py-5">
+  <div class="container d-flex justify-content-between">
+    <p class="mb-1 mr-auto">StudioHub &copy; Spencer Lewis!</p>
+
+        <p class="float-end mb-1 ml-auto">
+      <a href="#" >Back to top</a>
+    </p>
+
+  </div>
+</footer>
+
+
+        <script src="{% static 'bootstrap/js/jquery-3.6.0.slim.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

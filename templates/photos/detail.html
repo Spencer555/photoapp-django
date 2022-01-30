@@ -1,0 +1,150 @@
+{% extends 'photos/base.html' %}
+
+{% block content %}
+{% load static %}
+
+  <body class="bg-light">
+    
+
+
+<main class="container">
+  
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <img src='{{photos.image.url}}' alt='{{photos.name}}' width='100%'/>
+    
+    <div style='color:white' class='row mt-2'>
+    
+ <a href="{% url 'profile_detail' photos.user.profile.slug photos.user.profile.profile_id%}" style='text-decoration:none'>
+         <p  class="col-md-6 col-sm-12">@{{photos.user.username|capfirst}}</p>
+
+  </a>        
+        <p  class="col-md-6 col-sm-12">{{photos.name|capfirst}}</p>
+        
+ 
+ 
+    </div>
+
+<div class='d-flex justify-content-between'>
+ 
+ <form action="{% url 'like_photo' photos.slug photos.photo_id %}" method='POST'>
+    {% csrf_token %}
+        <button class='btn btn-sm btn-primary rounded' type='submit'>
+        <img style='height:3vh'  src="{% static 'icons/icons8_heart.svg' %}" />
+        {{photos.likes.count}}
+       </button>
+
+</form>
+
+ <form action="{% url 'dislike_photo' photos.slug photos.photo_id %}" method='POST'>
+    {% csrf_token %}
+        <button class='btn btn-sm btn-primary rounded' type='submit' >
+
+        <img style='height:3vh'  src="{% static 'icons/icons8_dislike_2.svg' %}" />
+        {{photos.dislikes.count}}
+       </button>
+
+
+</form>
+{% if user == photos.user %}
+
+ <form action="{% url 'update_photo' photos.slug photos.photo_id %}" method='POST'>
+    {% csrf_token %}
+        <button class='btn btn-sm btn-success rounded' type='submit' >
+
+        <img style='height:3vh;'  src="{% static 'icons/icons8_update.svg' %}" />
+       </button>
+
+
+</form>
+{% endif %}
+
+
+{% if user == photos.user %}
+ <form action="{% url 'delete_photo' photos.slug photos.photo_id %}" method='POST'>
+    {% csrf_token %}
+        <button class='btn btn-sm btn-danger rounded' type='submit' >
+
+        <img style='height:3vh'  src="{% static 'icons/icons8_delete_bin_1.svg' %}" />
+       </button>
+
+
+</form>
+
+{% endif %}
+
+
+
+ </div>
+
+    </div>
+
+{% if  user.is_authenticated%}
+ <form action="{% url 'create_comment' photos.slug photos.photo_id %}" method='POST'>
+      {% csrf_token %}
+       <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <div class=" bg-warning">
+      
+      <div class="mb-1">
+  <textarea class="form-control w-100" id="exampleFormControlTextarea1" rows="3" cols="100%" style='height:100%' name=comment></textarea>
+  <input type='text' hidden name='photoId' value='{{photos.photo_id}}'/>
+  <input type='text' hidden name='photoSlug' value='{{photos.slug}}'/>
+</div>
+    </div>
+
+    <button class="d-block text-end mt-3 btn btn-sm w-100 text-white btn-primary text-center" type='submit'> Add Comment
+    </button>
+
+  </div>
+</form>
+
+{% endif %}
+
+
+<div class='mb-4' style='text-align:center'>Total Comments: &nbsp {{photos.photo_comments.count}}</div>
+{% for comment in photos.photo_comments.get_queryset %}
+
+  <div class="row mb-3" data-masonry='{"percentPosition": true }'>
+    <div class="col-sm-12 col-lg-12 mb-12">
+      <div class="card">
+        <div class="card-body">
+         <div class='d-flex'> 
+          <h5 class="card-title">@{{comment.user.username|capfirst}}</h5>
+          
+          {% if comment.user == user %}
+        <small  style='margin-left:auto '>
+
+{% if user == comment.user %}
+
+        <a class=' col-md-1' href="{% url 'delete_comment' comment.slug comment.comment_id%}" class='btn btn-sm btn-primary' style='width:6%; height:5%; padding:1.5px' >
+
+        <img style='height:3vh'  src="{% static 'icons/icons8_delete_bin.svg' %}" />
+       </a>
+
+{% endif %}
+
+          </small>
+
+          {%endif%}
+
+          </div>
+          <p class="card-text">{{comment.message|capfirst}}</p>
+          <p class="card-text"><small class="text-muted">
+          {{comment.uploaded|date:"F d, Y"}}
+          </small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+     {% endfor %}
+
+
+</main>
+
+
+  </body>
+</html>
+
+{% endblock content %}
+
+

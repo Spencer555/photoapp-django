@@ -1,0 +1,49 @@
+ {% extends "photos/base.html" %} 
+ {% block content %}
+
+
+<div class='row'>
+<div style=' margin:auto; color:white' class='bg-dark p-2 rounded col-10 col-sm-7 col-md-6'>
+       
+        <p style='text-align:center'>My Profile </p>
+        <p style='text-align:center'>
+        <img class="bd-placeholder-img rounded-circle bg-dark text-center"  width="140" height="140" src='{{profiles.image.url}}' alt='{{profiles.user.username}}' preserveAspectRatio="xMidYMid slice" focusable="false">
+        </p>
+    <h1 class="h3 mb-3 fw-normal text-left">Username: &nbsp{{profiles.user.username|capfirst}}</h1>
+
+        <p class=" mb-4 text-left">About &nbsp:  <small style="text-align:center">{{profiles.about}}</small></p>
+
+     <p style='text-align:left'>Followers &nbsp: {{profiles.followers.count}}</p>
+
+
+
+{% if profiles.user != user %}
+<form action="{% url 'follow' profiles.slug profiles.profile_id %}" method='POST'>
+    {% csrf_token %}
+        <button  class='btn btn-sm btn-primary rounded w-100' type='submit' >
+        Follow 
+        {{profiles.followers.count}}
+      </button>
+</form>
+
+{% endif %}
+
+{% if profiles.user == user %}
+    <a href="{% url 'profile_update' profiles.slug profiles.profile_id%}" style='text-decoration:none'>
+    <button class="w-100 btn btn-md btn-primary" style='margin-top:2em; ' type="submit">Update</button>
+    </a>
+{% endif %}
+
+
+
+</div>
+
+        </div>
+      </div>
+</div>
+</div>
+
+{% endblock content %} 
+
+
+

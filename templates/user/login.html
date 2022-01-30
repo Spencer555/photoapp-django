@@ -1,0 +1,50 @@
+ {% extends "photos/base.html" %}  {% block content %}
+
+
+<div style=' margin:auto'>
+   <div class="col">
+
+    <div class="content-section">
+
+
+    
+    <!-- Custom styles for this template -->
+    <div class="row">
+        <div class="col-md-8 m-auto col-10 mt-4">
+        <div class="card card-cover  overflow-hidden text-white bg-dark rounded-5 shadow-lg" style='padding:2em'>
+
+  </head>
+  <body class="text-center">
+    
+<main class="form-signin">
+  <form  method='post'>
+     {% csrf_token %}
+    <h1 class='mb-4'>Log In</h1>
+
+    <div class="form-floating mb-4">
+      <input type="text" class="form-control" id="floatingInput" placeholder="username" name='username'>
+      <label for="floatingInput"  style='color:#000'>Username</label>
+    </div>
+    <div class="form-floating mb-6">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name='password'>
+      <label for="floatingPassword"  style='color:#000'>Password</label>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary mb-3" style='margin-top:2em' type="submit">Sign in</button>
+  <small style='margin-top:24px'>Need an account? <a href="{% url 'register' %}">Sign up</a></small>
+
+
+  </form>
+</div>
+
+        </div>
+      </div>
+</main>
+
+    </div>
+
+</div>
+</div>
+
+{% endblock content %} 
+
