@@ -1,0 +1,1 @@
+web: gunicorn photosearchapp.wsgi --log-file -

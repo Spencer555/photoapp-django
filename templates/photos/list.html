@@ -10,7 +10,7 @@
 <div>
 
 
- <h1 style='text-align:center'>Total Images {{ page_obj.paginator.count }}</h1>
+ <h1 style='text-align:center; margin-top:1em'>Total Images {{ page_obj.paginator.count }}</h1>
 
   <div class="album py-5 bg-light">
     <div class="container">
@@ -20,21 +20,21 @@
 
         <div class="col">
 <a href="{% url 'detail_photo' photo.slug photo.photo_id %}" style='text-decoration:none; color:black'>
-          <div class="card shadow-sm">
+          <div class="card shadow-sm bg-dark">
             <img  src="{{photo.image.url}}" alt="{{photo.name}}" class="bd-placeholder-img card-img-top" width="100%" height="225"  role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" />
             
            
 
             <div class="card-body">
               <p class="card-text d-flex">
-               <small style='text-align:left; margin-right:auto'>@{{photo.user.username}}</small>  <small class='ml-auto' style='text-align:right'>{{photo.name}}</small></p>
+               <small style='text-align:left; margin-right:auto; color:white'>@{{photo.user.username|capfirst}}</small>  <small class='ml-auto text-white' style='text-align:right'>{{photo.name}}</small></p>
                
               <div class=" justify-content-between align-items-center">
-                <small class="text-muted">{{ photo.uploaded|date:"F d, Y" }}</small>
+                <small class="text-white">{{ photo.uploaded|date:"F d, Y" }}</small>
 
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">{{photo.likes.count}}likes</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">{{photo.dislikes.count}}dislikes</button>
+                  <button type="button" class="btn btn-sm text-white btn-outline-secondary">{{photo.likes.count}}likes</button>
+                  <button type="button" class="btn btn-sm text-white btn-outline-secondary">{{photo.dislikes.count}}dislikes</button>
                 </div>
 
               </div>

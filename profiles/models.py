@@ -6,7 +6,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-
+from PIL import Image
 
 # Create your models here.
 
@@ -16,7 +16,7 @@ def generate_slug():
 
 class Profile(models.Model):
     profile_id = models.AutoField(primary_key=True)
-    image = models.ImageField(blank=True, null=True, upload_to='media/profile/images', default='media/profile/images/default.jpg')
+    image = models.ImageField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     followers = models.ManyToManyField(User, blank=True, related_name='profile_followers')
@@ -27,10 +27,15 @@ class Profile(models.Model):
         return self.user.username
 
 
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(generate_slug() + "-1!2@3#0)98*(7&^%$#$@" + self.user.username + '"-1!2@3#0)98*(7&^%$#$@"' + generate_slug())
         super(Profile, self).save(*args, **kwargs)
+
+
+
+
 
 
 

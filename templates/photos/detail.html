@@ -29,7 +29,7 @@
  
  <form action="{% url 'like_photo' photos.slug photos.photo_id %}" method='POST'>
     {% csrf_token %}
-        <button class='btn btn-sm btn-primary rounded' type='submit'>
+        <button class='btn btn-sm btn-primary rounded p-2' type='submit'>
         <img style='height:3vh'  src="{% static 'icons/icons8_heart.svg' %}" />
         {{photos.likes.count}}
        </button>
@@ -38,7 +38,7 @@
 
  <form action="{% url 'dislike_photo' photos.slug photos.photo_id %}" method='POST'>
     {% csrf_token %}
-        <button class='btn btn-sm btn-primary rounded' type='submit' >
+        <button class='btn btn-sm btn-primary rounded p-2' type='submit' >
 
         <img style='height:3vh'  src="{% static 'icons/icons8_dislike_2.svg' %}" />
         {{photos.dislikes.count}}
@@ -50,7 +50,7 @@
 
  <form action="{% url 'update_photo' photos.slug photos.photo_id %}" method='POST'>
     {% csrf_token %}
-        <button class='btn btn-sm btn-success rounded' type='submit' >
+        <button class='btn btn-sm btn-success rounded p-2' type='submit' >
 
         <img style='height:3vh;'  src="{% static 'icons/icons8_update.svg' %}" />
        </button>
@@ -63,7 +63,7 @@
 {% if user == photos.user %}
  <form action="{% url 'delete_photo' photos.slug photos.photo_id %}" method='POST'>
     {% csrf_token %}
-        <button class='btn btn-sm btn-danger rounded' type='submit' >
+        <button class='btn btn-sm btn-danger rounded p-2' type='submit' >
 
         <img style='height:3vh'  src="{% static 'icons/icons8_delete_bin_1.svg' %}" />
        </button>
@@ -106,17 +106,17 @@
 
   <div class="row mb-3" data-masonry='{"percentPosition": true }'>
     <div class="col-sm-12 col-lg-12 mb-12">
-      <div class="card">
+      <div class="card bg-dark">
         <div class="card-body">
          <div class='d-flex'> 
-          <h5 class="card-title">@{{comment.user.username|capfirst}}</h5>
+          <h5 class="card-title text-white">@{{comment.user.username|capfirst}}</h5>
           
           {% if comment.user == user %}
         <small  style='margin-left:auto '>
 
 {% if user == comment.user %}
 
-        <a class=' col-md-1' href="{% url 'delete_comment' comment.slug comment.comment_id%}" class='btn btn-sm btn-primary' style='width:6%; height:5%; padding:1.5px' >
+        <a class=' col-md-1 bg-danger p-1' href="{% url 'delete_comment' comment.slug comment.comment_id%}" class='btn btn-sm btn-primary' style='width:6%; height:5%; padding:1.5px; border-radius:1.5em; margin:auto' >
 
         <img style='height:3vh'  src="{% static 'icons/icons8_delete_bin.svg' %}" />
        </a>
@@ -128,10 +128,12 @@
           {%endif%}
 
           </div>
-          <p class="card-text">{{comment.message|capfirst}}</p>
-          <p class="card-text"><small class="text-muted">
+
+          <p class="card-text text-white">{{comment.message|capfirst}}</p>
+          <p class="card-text"><small class="text-white">
           {{comment.uploaded|date:"F d, Y"}}
           </small></p>
+
         </div>
       </div>
     </div>
